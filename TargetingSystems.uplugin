@@ -1,0 +1,25 @@
+{
+	"FileVersion": 3,
+	"Version": 5,
+	"VersionName": "5.0",
+	"EngineVersion" : "4.15.0",
+	"FriendlyName": "TargetingSystemsPlugin",
+	"Description": "Code plugin for various targeting utilities and effects including fuzzy targeting and reactive reticles.",
+	"Category": "Utility",
+	"CreatedBy": "Calem Bendell",
+	"CreatedByURL": "http://calben.xyz",
+	"DocsURL": "http://calben.xyz/UE4-TargetingSystemsPlugin",
+	"MarketplaceURL": "",
+	"SupportURL": "calem.j.bendell@gmail.com",
+	"Modules": [
+		{
+			"Name": "TargetingSystemsPlugin",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	],
+	"EnabledByDefault": true,
+	"CanContainContent": true,
+	"IsBetaVersion": false,
+	"Installed": false
+}
