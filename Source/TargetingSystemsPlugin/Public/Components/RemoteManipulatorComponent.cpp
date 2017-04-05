@@ -41,7 +41,6 @@ void URemoteManipulatorComponent::BeginPlay()
 	Super::BeginPlay();
 }
 
-
 // Called every frame
 void URemoteManipulatorComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
@@ -59,7 +58,7 @@ void URemoteManipulatorComponent::TickComponent(float DeltaTime, ELevelTick Tick
 
 FVector URemoteManipulatorComponent::CalculateForceVectorByRestrictedRelativePosition()
 {
-	FVector Delta = this->GetComponentLocation() - RelativePositionManipulatorVector;
+	FVector Delta = this->GetComponentLocation() - RelativePositionManipulatorLocation;
 	if (bUseDeadzone)
 	{
 		if (Delta.Size() <= DeadzoneSize)
@@ -142,7 +141,7 @@ void URemoteManipulatorComponent::StartManipulatingByRelativePosition()
 		if (RelativePositionManipulatorIndicatorActorClass)
 		{
 			bIsManipulatingByRelativePosition = true;
-			RelativePositionManipulatorVector = GetComponentLocation();
+			RelativePositionManipulatorLocation = GetComponentLocation();
 			RelativePositionManipulatorIndicatorActor = GetWorld()->SpawnActor<AActor>(RelativePositionManipulatorIndicatorActorClass, this->GetComponentLocation(), this->GetComponentRotation());
 		}
 		else

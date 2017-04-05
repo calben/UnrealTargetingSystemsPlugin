@@ -28,12 +28,15 @@
 /// @cond
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 /// @endcond
+
+/// <summary>
+/// A component for controlling an object with force-like controls.
+/// </summary>
 class TARGETINGSYSTEMSPLUGIN_API URemoteManipulatorComponent : public USceneComponent
 {
-
 	/// @cond
 	GENERATED_BODY()
-	/// @endcond
+		/// @endcond
 
 public:
 	// Sets default values for this component's properties
@@ -45,87 +48,200 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool bIsManipulating;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool bMovedTargetAboutManipulatorRotation;
+		/// <summary>
+		/// TODO
+		/// </summary>
+		bool bIsManipulating;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool bIncreaseDampingOnCurrentTarget;
+		/// <summary>
+		/// TODO
+		/// </summary>
+		bool bMoveTargetAboutManipulatorRotation;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool bUseDeadzone = true;
+		/// <summary>
+		/// If true, increases the linear and angular damping
+		/// on the target when it is grabbed.
+		/// </summary>
+		bool bIncreaseDampingOnCurrentTarget;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool bEnforceMaximumForceMultiplierDistance = true;
+		/// <summary>
+		/// If true, applies a deadzone to the relative manipulator.
+		/// </summary>
+		bool bUseDeadzone = true;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float LinearDampingAmount = 0.2f;
+		/// <summary>
+		/// If true, applies a clamp to the distance multiplier.
+		/// </summary>
+		bool bEnforceMaximumForceMultiplierDistance = true;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float AngularDampingAmount = 0.5f;
+		/// <summary>
+		/// Linear damping added to target when grabbed and removed when released.
+		/// </summary>
+		float LinearDampingAmount = 0.2f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float BaseImpulseScale = 1000;
+		/// <summary>
+		/// Angular damping added to target when grabbed and removed when released.
+		/// </summary>
+		float AngularDampingAmount = 0.5f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float BaseForceScale = 1000;
+		/// <summary>
+		/// The base impulse scale multiplied with all impulses applied.
+		/// </summary>
+		float BaseImpulseScale = 1000;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float MaximumForceMultiplierDistance = 50.f;
+		/// <summary>
+		/// The base force scale multiplied with all forces applied.
+		/// </summary>
+		float BaseForceScale = 1000;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float DeadzoneSize = 5.f;
+		/// <summary>
+		/// If enforced with @bEnforceMaxiumForceMultiplierDistance,
+		/// defines the maximum force size to be applied to a target.
+		/// </summary>
+		float MaximumForceMultiplierDistance = 50.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		/// <summary>
+		/// If enforced with @bUseDeadzone, deadzone similar to a gamepad's joystick deadzones
+		/// for remote manipulating by relative position.
+		/// </summary>
+		float DeadzoneSize = 5.f;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	class AActor* CurrentTarget;
+		/// <summary>
+		/// Target to be remotely manipulated.
+		/// </summary>
+		class AActor* CurrentTarget;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	class UPrimitiveComponent* CurrentTargetPrimitiveRoot;
+		/// <summary>
+		/// A direct reference to the primitive component of the target.
+		/// </summary>
+		class UPrimitiveComponent* CurrentTargetPrimitiveRoot;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	class TSubclassOf<AActor> RelativePositionManipulatorIndicatorActorClass;
+		/// <summary>
+		/// If not null, this class is used to spawn the indicator actor.
+		/// </summary>
+		class TSubclassOf<AActor> RelativePositionManipulatorIndicatorActorClass;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	AActor* RelativePositionManipulatorIndicatorActor;
+		/// <summary>
+		/// An actor to indicate the origin for the remote manipulator.
+		/// </summary>
+		AActor* RelativePositionManipulatorIndicatorActor;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	FVector RelativePositionManipulatorVector;
+		/// <summary>
+		/// The location (or origin) of the relative position manipulator.
+		/// </summary>
+		/// This is the location from which a delta is calculated
+		/// to apply forces and impulses to a target.
+		/// Note that the delta calculated is not necessarily linearly applied.
+		FVector RelativePositionManipulatorLocation;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	bool bIsManipulatingByRelativePosition = false;
+		/// <summary>
+		/// The boolean that tracks whether the target is being manipulated.
+		/// </summary>
+		bool bIsManipulatingByRelativePosition = false;
 
 	UFUNCTION(BlueprintCallable, Category = Manipulating)
-	FVector CalculateForceVectorByRestrictedRelativePosition();
+		/// <summary>
+		/// Calculates a vector direction for a 
+		/// </summary>
+		/// <returns></returns>
+		FVector CalculateForceVectorByRestrictedRelativePosition();
 
 	UFUNCTION(BlueprintCallable, Category = Manipulating)
-	void AddImpulseToTargetAlongForwardVector(float ImpulseAmount);
+		/// <summary>
+		/// Jerks the target along the forward vector of the instantiated component.
+		/// </summary>
+		/// <param name="ForceScale">The multiplier for the unit vector applied as the jerk.</param>
+		void AddImpulseToTargetAlongForwardVector(float ImpulseAmount);
 
 	UFUNCTION(BlueprintCallable, Category = Manipulating)
-	void AddImpulseToTargetTowardWorldLocation(FVector Location, float ImpulseAmount);
+		/// <summary>
+		/// Jerks the target towards a world point, such as a marker.
+		/// </summary>
+		/// <param name="Location">The world location towards which to jerk.</param>
+		/// <param name="ForceScale">The multiplier for the unit vector applied as the jerk.</param>
+		void AddImpulseToTargetTowardWorldLocation(FVector Location, float ImpulseAmount);
 
 	UFUNCTION(BlueprintCallable, Category = Manipulating)
-	void AddForceToTargetAlongForwardVector(float ForceScale);
+		/// <summary>
+		/// Accelerates the target along the forward vector of the instantiated component.
+		/// </summary>
+		/// <param name="ForceScale">The multiplier for the unit vector applied as the push.</param>
+		void AddForceToTargetAlongForwardVector(float ForceScale);
 
 	UFUNCTION(BlueprintCallable, Category = Manipulating)
-	void AddForceToTargetTowardWorldLocation(FVector Location, float ForceScale);
+		/// <summary>
+		/// Accelerates the target towards a world point, such as a marker.
+		/// </summary>
+		/// <param name="Location">The world location towards which to push.</param>
+		/// <param name="ForceScale">The multiplier for the unit vector applied as the push.</param>
+		void AddForceToTargetTowardWorldLocation(FVector Location, float ForceScale);
 
 	UFUNCTION(BlueprintCallable, Category = Manipulating)
-	void ToggleCurrentTargetGravity();
+		/// <summary>
+		/// Enables or disables gravity on the target.
+		/// </summary>
+		void ToggleCurrentTargetGravity();
 
 	UFUNCTION(BlueprintCallable, Category = Manipulating)
-	void DampenTargetForces(float DampeningAmount);
+		/// <summary>
+		/// Dampens velocity on target or zeroes them if dampening amount 
+		/// is greater than velocity.
+		/// </summary>
+		/// Applies an impulse opposite the velocity direction to reduce speed.
+		/// <param name="DampeningAmount">The multiplier for the unit vector applied as dampening.</param>
+		void DampenTargetForces(float DampeningAmount);
 
 	UFUNCTION(BlueprintCallable, Category = Manipulating)
-	void StartManipulatingByRelativePosition();
+		/// <summary>
+		/// Starts manipulating using the relative position controller.
+		/// </summary>
+		/// The relative position controller is most intuitive in VR,
+		/// but it can be used in any mode.  A point in space is designated
+		/// to be the origin of the manipulation.  The delta between the
+		/// manipulator and origin is applied to the object as a force.
+		void StartManipulatingByRelativePosition();
 
 	UFUNCTION(BlueprintCallable, Category = Manipulating)
-	void StopManipulatingByRelativePosition();
+		/// <summary>
+		/// Stops manipulating using the relative position controller.
+		/// </summary>
+		/// The relative position controller is most intuitive in VR,
+		/// but it can be used in any mode.  A point in space is designated
+		/// to be the origin of the manipulation.  The delta between the
+		/// manipulator and origin is applied to the object as a force.
+		void StopManipulatingByRelativePosition();
 
 	UFUNCTION(BlueprintCallable, Category = Manipulating)
-	void SetCurrentTarget(class AActor* NewTarget);
+		/// <summary>
+		/// Sets a new manipulated actor and releases the old manipulated object.
+		/// </summary>
+		/// <param name="NewTarget">The new actor to manipulate.</param>
+		void SetCurrentTarget(class AActor* NewTarget);
 
 	UFUNCTION(BlueprintCallable, Category = Manipulating)
-	void JerkCurrentTarget(float ImpulseMultiplier, float TorqueMultiplier);
+		/// <summary>
+		/// Applies a random jerking force to the current target, giving a
+		/// "jump to attention" effect.
+		/// </summary>
+		/// <param name="ImpulseMultiplier">The impulse multiplier of the jerk, multiplied to a unit vector.</param>
+		/// <param name="TorqueMultiplier">The torque multiplier of the jerk, multiplied to a unit vector.</param>
+		void JerkCurrentTarget(float ImpulseMultiplier, float TorqueMultiplier);
 };
