@@ -58,7 +58,7 @@ void URemoteManipulatorComponent::TickComponent(float DeltaTime, ELevelTick Tick
 
 FVector URemoteManipulatorComponent::CalculateForceVectorByRestrictedRelativePosition()
 {
-	FVector Delta = this->GetComponentLocation() - RelativePositionManipulatorLocation;
+	FVector Delta = this->GetComponentLocation() - RelativePositionManipulatorVector;
 	if (bUseDeadzone)
 	{
 		if (Delta.Size() <= DeadzoneSize)
@@ -141,7 +141,7 @@ void URemoteManipulatorComponent::StartManipulatingByRelativePosition()
 		if (RelativePositionManipulatorIndicatorActorClass)
 		{
 			bIsManipulatingByRelativePosition = true;
-			RelativePositionManipulatorLocation = GetComponentLocation();
+			RelativePositionManipulatorVector = GetComponentLocation();
 			RelativePositionManipulatorIndicatorActor = GetWorld()->SpawnActor<AActor>(RelativePositionManipulatorIndicatorActorClass, this->GetComponentLocation(), this->GetComponentRotation());
 		}
 		else

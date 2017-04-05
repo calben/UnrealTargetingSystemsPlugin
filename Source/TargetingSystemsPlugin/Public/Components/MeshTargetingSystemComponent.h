@@ -46,8 +46,17 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		/// <summary>
+		/// The static mesh used as a collision hull for the targeting system.
+		/// </summary>
+		/// The default mesh tapers at the beginning and end
+		/// but for a more efficient implementation an elongated cube could be used.
 		class UStaticMeshComponent* StaticMesh;
 
+	/// <summary>
+	/// Gets the object closest to screen center within the collision mesh.
+	/// </summary>
+	/// TODO in the future add more options for how to customise this component.
 	virtual void SetCurrentTarget() override;
 
 
