@@ -97,7 +97,7 @@ void UTargetingSystemComponent::UpdateHighlighting()
 	// GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("UPDATING HIGHLIGHTING")));
 	if (PreviousTarget)
 	{
-		UPrimitiveComponent* preprim = PreviousTarget->GetRootPrimitiveComponent();
+		UPrimitiveComponent* preprim = Cast<UPrimitiveComponent>(PreviousTarget->GetRootComponent());
 		if (preprim)
 		{
 			preprim->SetRenderCustomDepth(false);
@@ -105,7 +105,7 @@ void UTargetingSystemComponent::UpdateHighlighting()
 	}
 	if (CurrentTarget)
 	{
-		UPrimitiveComponent* currprim = CurrentTarget->GetRootPrimitiveComponent();
+		UPrimitiveComponent* currprim = Cast<UPrimitiveComponent>(CurrentTarget->GetRootComponent());
 		if (currprim)
 		{
 			currprim->SetRenderCustomDepth(true);
