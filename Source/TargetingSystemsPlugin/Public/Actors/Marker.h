@@ -25,25 +25,35 @@
 #include "GameFramework/Actor.h"
 #include "Marker.generated.h"
 
-UCLASS( ClassGroup=(Custom) )
+/// @cond
+UCLASS(ClassGroup = (Custom))
+/// @endcond
+
+/// <summary>
+/// The base class for a marker.
+/// </summary>
 class TARGETINGSYSTEMSPLUGIN_API AMarker : public AActor
 {
+
+	/// @cond
 	GENERATED_BODY()
-	
-public:	
+		/// @endcond
+
+
+public:
 	// Sets default values for this actor's properties
 	AMarker();
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-	
+
 	// Called every frame
-	virtual void Tick( float DeltaSeconds ) override;
+	virtual void Tick(float DeltaSeconds) override;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 		UStaticMeshComponent* Mesh;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 		UPointLightComponent* Light;
-	
+
 };

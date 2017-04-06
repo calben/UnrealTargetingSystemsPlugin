@@ -106,14 +106,14 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		/// <summary>
-		/// If enforced with @bEnforceMaxiumForceMultiplierDistance,
+		/// If enforced with #bEnforceMaxiumForceMultiplierDistance,
 		/// defines the maximum force size to be applied to a target.
 		/// </summary>
 		float MaximumForceMultiplierDistance = 50.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		/// <summary>
-		/// If enforced with @bUseDeadzone, deadzone similar to a gamepad's joystick deadzones
+		/// If enforced with #bUseDeadzone, deadzone similar to a gamepad's joystick deadzones
 		/// for remote manipulating by relative position.
 		/// </summary>
 		float DeadzoneSize = 5.f;

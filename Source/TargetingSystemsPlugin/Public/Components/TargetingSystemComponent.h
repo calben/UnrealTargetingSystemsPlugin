@@ -28,6 +28,15 @@
 /// @cond
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 /// @endcond
+
+/// <summary>
+/// A component that adds targeting functionality to a given actor.
+/// </summary>
+/// This is the primary component of TargetingSystemsPlugin (aptly named, eh?).
+/// Add this to an actor and set #bEnableTargeting to true and this component will
+/// update the #CurrentTarget actor every tick.  This component uses a simple trace
+/// to select its current target, but components extending this may use fuzzier 
+/// and more sophisticated methods.
 class TARGETINGSYSTEMSPLUGIN_API UTargetingSystemComponent : public USceneComponent
 {
 
@@ -67,7 +76,7 @@ public:
 		/// It is often useful to know the previously targeted actor,
 		/// particularly if some effect is being applied to the targeted
 		/// actor and you don't want to edit more functionality into 
-		/// @OnTargetChanged()
+		/// #OnTargetChanged()
 		class AActor* PreviousTarget;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)

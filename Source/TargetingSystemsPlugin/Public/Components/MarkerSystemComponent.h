@@ -26,13 +26,21 @@
 #include "MarkerSystemComponent.generated.h"
 
 /// @cond
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 /// @endcond
+
+/// <summary>
+/// A component designed to spawn and manage markers into the world.
+/// </summary>
+/// The markers are intended to be used a reference points in the world.
+/// For example, I might spawn a marker and then use the marker location
+/// as the world location towards which the remote manipulator should 
+/// push a given object.
 class TARGETINGSYSTEMSPLUGIN_API UMarkerSystemComponent : public USceneComponent
 {
 	/// @cond
 	GENERATED_BODY()
-	/// @endcond
+		/// @endcond
 
 public:
 	// Sets default values for this component's properties
@@ -45,15 +53,29 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		/// <summary>
+		/// Enables more than one marker to be placed in the world.
+		/// </summary>
 		bool bMultipleMarkerMode = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		/// <summary>
+		/// The Class or Blueprint to use when spawning a marker in the world.
+		/// </summary>
 		class TSubclassOf<class AActor> MarkerClass;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		/// <summary>
+		/// A list of currently deployed markers.
+		/// </summary>
 		TArray<class AActor*> DeployedMarkers;
 
 	UFUNCTION(BlueprintCallable, Category = Markers)
+		/// <summary>
+		/// Deploys a marker at the desired world location.
+		/// </summary>
+		/// <param name="WorldLocation">The location at which to spawn the marker.</param>
+		/// <param name="WorldRotation">The rotation with which to spawn the marker.</param>
 		void DeployMarker(FVector WorldLocation, FRotator WorldRotation);
 
 };
