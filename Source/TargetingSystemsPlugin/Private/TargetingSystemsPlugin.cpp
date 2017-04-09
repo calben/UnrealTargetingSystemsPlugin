@@ -49,4 +49,4 @@ public:
 
 #undef LOCTEXT_NAMESPACE
 	
-IMPLEMENT_MODULE(FTargetingSystemsModule, HoverPlugin)
+IMPLEMENT_MODULE(FTargetingSystemsModule, TargetingSystemsPlugin)
