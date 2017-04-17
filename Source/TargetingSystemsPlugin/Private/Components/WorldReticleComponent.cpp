@@ -52,15 +52,17 @@ void UWorldReticleComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// ...
+	if (bUpdateReticlePositionsOnTick)
+	{
+		UpdateReticlePositions();
+	}
 }
-
 void UWorldReticleComponent::UpdateReticlePositions()
 {
 	for (auto i = 0; i < ReticleActors.Num(); i++)
 	{
-		ReticleActors[i]->SetActorLocation(GetComponentLocation() + GetPositionAtAngle(ReticleAngles[i]));
-		ReticleActors[i]->SetActorRotation(FRotationMatrix::MakeFromX(GetComponentLocation() - ReticleActors[i]->GetActorLocation()).Rotator());
+		ReticleActors[i]->SetActorRelativeLocation(GetPositionAtAngle(ReticleAngles[i]));
+		ReticleActors[i]->SetActorRelativeRotation(FRotationMatrix::MakeFromX(-GetPositionAtAngle(ReticleAngles[i])).Rotator());
 	}
 }
 

@@ -79,6 +79,21 @@ public:
 		/// #OnTargetChanged()
 		class AActor* PreviousTarget;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		/// <summary>
+		/// The distance to target by targeting trace.
+		/// </summary>
+		/// For the base targeting method, this is the line trace distance
+		/// obtained by trace targeting.  For other targeting systems,
+		/// it may be useful for this to have a different value.
+		float TargetingDistance;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		/// <summary>
+		/// Maximum distance to ray trace or otherwise target.
+		/// </summary>
+		float MaximumTargetingDistance = 5000.f;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		/// <summary>
 		/// If true, draws debug lines for the targeting trace.
