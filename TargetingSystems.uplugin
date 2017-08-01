@@ -2,7 +2,6 @@
 	"FileVersion": 3,
 	"Version": 5,
 	"VersionName": "5.0",
-	"EngineVersion" : "4.15.0",
 	"FriendlyName": "TargetingSystemsPlugin",
 	"Description": "Code plugin for various targeting utilities and effects including fuzzy targeting and reactive reticles.",
 	"Category": "Utility",
