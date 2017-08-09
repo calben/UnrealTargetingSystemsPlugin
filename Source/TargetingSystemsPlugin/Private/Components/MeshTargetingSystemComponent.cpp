@@ -66,7 +66,16 @@ void UMeshTargetingSystemComponent::SetCurrentTarget()
 	float distance = 999999.f;
 	for (AActor* actor : Overlapping)
 	{
-		if (!actor->GetName().Contains("BP_MotionController"))
+		bool targetable = false;
+		for (FName name : ValidTags)
+		{
+			if (actor->ActorHasTag(name))
+			{
+				targetable = true;
+				break;
+			}
+		}
+		if (targetable)
 		{
 			float d = UKismetMathLibrary::GetPointDistanceToSegment(actor->GetActorLocation(), GetComponentLocation(), GetComponentLocation() + GetForwardVector() * 99999.f);
 			//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("OBJECT %s IS %f AWAY FROM CENTER LINE"), *actor->GetName(), d));

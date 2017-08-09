@@ -48,7 +48,6 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		/// <summary>
 		/// TODO
@@ -156,6 +155,13 @@ public:
 		/// The boolean that tracks whether the target is being manipulated.
 		/// </summary>
 		bool bIsManipulatingByRelativePosition = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		/// <summary>
+		/// If true, sets custom render depth to true for the current target
+		/// and sets render depth to false when a new item is targeted.
+		/// <summary>
+		bool bShouldSetCustomRenderDepthTrueForTarget = true;
 
 	UFUNCTION(BlueprintCallable, Category = Manipulating)
 		/// <summary>

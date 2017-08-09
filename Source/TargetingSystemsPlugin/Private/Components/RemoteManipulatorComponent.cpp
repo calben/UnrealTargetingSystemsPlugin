@@ -185,6 +185,12 @@ void URemoteManipulatorComponent::SetCurrentTarget(AActor* NewTarget)
 				CurrentTargetPrimitiveRoot = Primitive;
 				CurrentTargetPrimitiveRoot->SetLinearDamping(CurrentTargetPrimitiveRoot->GetLinearDamping() + LinearDampingAmount);
 				CurrentTargetPrimitiveRoot->SetAngularDamping(CurrentTargetPrimitiveRoot->GetAngularDamping() + AngularDampingAmount);
+				UE_LOG(LogTemp, Warning, TEXT("IS SIMULATING PHYSICS"));
+				if (bShouldSetCustomRenderDepthTrueForTarget)
+				{
+					UE_LOG(LogTemp, Warning, TEXT("SETTING CUSTOM RENDER DEPTH"));
+					CurrentTargetPrimitiveRoot->SetRenderCustomDepth(true);
+				}
 			}
 		}
 	}

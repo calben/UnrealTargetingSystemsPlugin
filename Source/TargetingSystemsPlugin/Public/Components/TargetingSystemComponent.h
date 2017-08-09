@@ -60,7 +60,7 @@ public:
 		/// </summary>
 		bool bIsTargeting = true;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 		/// <summary>
 		/// If not null, the targeted actor.
 		/// </summary>
@@ -69,9 +69,15 @@ public:
 		/// </warning>
 		class AActor* CurrentTarget;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+		/// <summary>
+		/// If not null, the active targets.
+		/// </summary>
+		TArray<class AActor*> SelectedActors;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		/// <summary>
-		/// If not null, the actor target before the current actor.
+		/// If not null, the actor target before the current actor.	
 		/// </summary>
 		/// It is often useful to know the previously targeted actor,
 		/// particularly if some effect is being applied to the targeted
@@ -94,11 +100,33 @@ public:
 		/// </summary>
 		float MaximumTargetingDistance = 5000.f;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		/// <summary>
+		/// If true, indicates that the previous target's render depth
+		/// was already set to true before targeting.
+		/// </summary>
+		bool bCurrentTargetAlreadyTrueCustomRenderDepth;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		bool bSetCustomRenderDepthOnTargets = true;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		bool bSetStencilValueOnInitialTargeting = true;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		/// <summary>
 		/// If true, draws debug lines for the targeting trace.
 		/// </summary>
 		bool bDrawDebug = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		TMap<FString, int> TagToStencilBuffer;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		/// <summary>
+		/// If not null, uses this tag to determine valid targetables.
+		/// </summary>
+		TArray<FName> ValidTags;
 
 	UFUNCTION(BlueprintCallable, Category = Targeting)
 		/// <summary>
@@ -121,5 +149,20 @@ public:
 		/// and true on current to enable highlighting effects.
 		/// </summary>
 		void UpdateHighlighting();
+
+	UFUNCTION(BlueprintCallable, Category = Targeting)
+		AActor* SelectCurrentTarget();
+
+	UFUNCTION(BlueprintCallable, Category = Targeting)
+		AActor* SelectOnlyCurrentTarget();
+
+	UFUNCTION(BlueprintCallable, Category = Targeting)
+		void AddActorToSelectedActors(AActor* actor);
+
+	UFUNCTION(BlueprintCallable, Category = Targeting)
+		void RemoveActorFromSelectedActors(AActor* actor);
+
+	UFUNCTION(BlueprintCallable, Category = Targeting)
+		void SetActorStencilValueByTag(AActor * actor);
 
 };

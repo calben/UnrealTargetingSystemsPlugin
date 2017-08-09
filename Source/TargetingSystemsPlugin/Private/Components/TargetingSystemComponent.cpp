@@ -64,14 +64,6 @@ void UTargetingSystemComponent::TickComponent(float DeltaTime, ELevelTick TickTy
 
 void UTargetingSystemComponent::SetCurrentTarget()
 {
-	//if (CurrentTarget)
-	//{
-	//	UActorComponent* Light = CurrentTarget->FindComponentByClass(UPointLightComponent::StaticClass());
-	//	if (Light)
-	//	{
-	//		Light->DestroyComponent();
-	//	}
-	//}
 	FHitResult f(ForceInit);
 	FVector start = this->GetComponentLocation();
 	FVector direction = this->GetForwardVector();
@@ -90,7 +82,10 @@ void UTargetingSystemComponent::SetCurrentTarget()
 
 void UTargetingSystemComponent::OnTargetChanged()
 {
-	UpdateHighlighting();
+	if (bSetCustomRenderDepthOnTargets)
+	{
+		UpdateHighlighting();
+	}
 }
 
 void UTargetingSystemComponent::UpdateHighlighting()
@@ -99,7 +94,10 @@ void UTargetingSystemComponent::UpdateHighlighting()
 	if (PreviousTarget)
 	{
 		UPrimitiveComponent* preprim = Cast<UPrimitiveComponent>(PreviousTarget->GetRootComponent());
-		if (preprim)
+		if (preprim &&
+			!bCurrentTargetAlreadyTrueCustomRenderDepth &&
+			bSetCustomRenderDepthOnTargets &&
+			!SelectedActors.Contains(PreviousTarget))
 		{
 			preprim->SetRenderCustomDepth(false);
 		}
@@ -109,7 +107,81 @@ void UTargetingSystemComponent::UpdateHighlighting()
 		UPrimitiveComponent* currprim = Cast<UPrimitiveComponent>(CurrentTarget->GetRootComponent());
 		if (currprim)
 		{
-			currprim->SetRenderCustomDepth(true);
+			if (currprim->bRenderCustomDepth)
+			{
+				bCurrentTargetAlreadyTrueCustomRenderDepth = true;
+			}
+			else
+			{
+				bCurrentTargetAlreadyTrueCustomRenderDepth = false;
+				currprim->SetRenderCustomDepth(true);
+				if (bSetStencilValueOnInitialTargeting)
+				{
+					SetActorStencilValueByTag(CurrentTarget);
+				}
+			}
+		}
+	}
+}
+
+AActor* UTargetingSystemComponent::SelectCurrentTarget()
+{
+	AddActorToSelectedActors(CurrentTarget);
+	return CurrentTarget;
+}
+
+AActor* UTargetingSystemComponent::SelectOnlyCurrentTarget()
+{
+	AddActorToSelectedActors(CurrentTarget);
+	return CurrentTarget;
+}
+
+void UTargetingSystemComponent::AddActorToSelectedActors(AActor* actor)
+{
+	if (actor != nullptr)
+	{
+		this->SelectedActors.Add(actor);
+		SetActorStencilValueByTag(actor);
+	}
+}
+
+void UTargetingSystemComponent::RemoveActorFromSelectedActors(AActor* actor)
+{
+	if (actor != nullptr)
+	{
+		if (SelectedActors.Contains(actor))
+		{
+			if (bSetCustomRenderDepthOnTargets)
+			{
+				UPrimitiveComponent* prim = Cast<UPrimitiveComponent>(actor->GetRootComponent());
+				prim->SetRenderCustomDepth(false);
+			}
+			SelectedActors.Remove(actor);
+		}
+	}
+}
+
+void UTargetingSystemComponent::SetActorStencilValueByTag(AActor* actor)
+{
+	if (actor != nullptr)
+	{
+		if (bSetCustomRenderDepthOnTargets)
+		{
+			UPrimitiveComponent* prim = Cast<UPrimitiveComponent>(actor->GetRootComponent());
+			uint32 stencil_value;
+			// actors will probably have fewer tags than the tag to buffer list
+			// but if your actors have many tags it may be more performant to iterate through the tag map
+			// rather than iterating through the actor tags
+			for (FName name : actor->Tags)
+			{
+				auto name_string = name.ToString();
+				if (TagToStencilBuffer.Contains(name_string))
+				{
+					stencil_value = TagToStencilBuffer[name_string];
+					break;
+				}
+			}
+			prim->SetCustomDepthStencilValue(stencil_value);
 		}
 	}
 }

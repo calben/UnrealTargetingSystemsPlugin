@@ -33,8 +33,8 @@ class TARGETINGSYSTEMSPLUGIN_API UMeshTargetingSystemComponent : public UTargeti
 
 	/// @cond
 	GENERATED_BODY()
-	/// @endcond
-	
+		/// @endcond
+
 public:
 	// Sets default values for this component's properties
 	UMeshTargetingSystemComponent();
@@ -58,6 +58,5 @@ public:
 	/// </summary>
 	/// TODO in the future add more options for how to customise this component.
 	virtual void SetCurrentTarget() override;
-
 
 };
