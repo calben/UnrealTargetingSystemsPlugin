@@ -5,5 +5,5 @@ Code plugin for various targeting utilities and effects including fuzzy targetin
 ## Installation
 
 ```
-git submodule add https://github.com/calben/UnrealTargetinSystemsPlugin Plugins/TargetingSystems
+git submodule add https://github.com/calben/UnrealTargetingSystemsPlugin Plugins/TargetingSystems
 ```
