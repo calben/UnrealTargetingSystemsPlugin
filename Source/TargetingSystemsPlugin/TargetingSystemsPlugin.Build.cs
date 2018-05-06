@@ -24,7 +24,7 @@ using UnrealBuildTool;
 
 public class TargetingSystemsPlugin : ModuleRules
 {
-    public TargetingSystemsPlugin(TargetInfo Target)
+    public TargetingSystemsPlugin(ReadOnlyTargetRules Target) : base(Target)
     {
 
         PublicIncludePaths.AddRange(
