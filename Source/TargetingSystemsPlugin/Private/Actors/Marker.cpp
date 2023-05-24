@@ -1,17 +1,17 @@
 // MIT License
-// 
+//
 // Copyright(c) 2017 Calem Bendell
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files(the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and / or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions :
-// 
+//
 // The above copyright notice and this permission notice shall be included in all
 // copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE
@@ -20,31 +20,27 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "TargetingSystemsPlugin.h"
-#include "Marker.h"
+#include "Actors/Marker.h"
 
+#include "TargetingSystemsPlugin.h"
 
 // Sets default values
 AMarker::AMarker()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+    // Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+    PrimaryActorTick.bCanEverTick = true;
 
-	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
-
+    Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
 }
 
 // Called when the game starts or when spawned
 void AMarker::BeginPlay()
 {
-	Super::BeginPlay();
-	
+    Super::BeginPlay();
 }
 
 // Called every frame
-void AMarker::Tick( float DeltaTime )
+void AMarker::Tick(float DeltaTime)
 {
-	Super::Tick( DeltaTime );
-
+    Super::Tick(DeltaTime);
 }
-
