@@ -128,6 +128,9 @@ public:
     /// </summary>
     TArray<FName> ValidTags;
 
+    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    TMap<FString, float> DurationInGaze;
+
     UFUNCTION(BlueprintCallable, Category = Targeting)
     /// <summary>
     /// The function used to calculate a new target.
